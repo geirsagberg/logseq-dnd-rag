@@ -4,9 +4,9 @@
   "description": "RAG system for D&D campaign notes in Logseq",
   "type": "module",
   "scripts": {
-    "sync": "tsx src/sync.ts",
-    "query": "tsx src/query.ts",
-    "dev": "tsx watch src/index.ts",
+    "sync": "bun src/sync.ts",
+    "query": "bun src/query.ts",
+    "dev": "bun --watch src/index.ts",
     "build": "tsc",
     "typecheck": "tsc --noEmit",
     "test": "bun test",
@@ -24,8 +24,6 @@
   "devDependencies": {
     "@types/bun": "^1.3.2",
     "@types/node": "^24.10.1",
-    "@types/uuid": "^11.0.0",
-    "tsx": "^4.20.6",
     "typescript": "^5.9.3"
   }
 }
