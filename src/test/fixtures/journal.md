@@ -1,0 +1,10 @@
+- Session 42 at the Ruins of Eldrath
+  - The party investigated the ancient ruins
+    - Found mysterious artifacts
+    - [[Caelum Fenovar]] revealed his connection to the archmage
+  - Combat encounter with shadow creatures
+    - ((abc123-def456))
+  - Discovered clues about the [[Phylactery]]
+- Character development
+  - [[Theron]] gained a new spell
+  - The group decided to head north
