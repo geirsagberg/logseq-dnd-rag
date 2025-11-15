@@ -5,6 +5,7 @@ A Retrieval-Augmented Generation (RAG) system for querying D&D campaign notes st
 ## Overview
 
 This system:
+
 - Parses Logseq markdown files (journals and pages)
 - Chunks content intelligently while preserving context
 - Generates embeddings using OpenAI
@@ -58,6 +59,7 @@ bun sync full
 ```
 
 This will:
+
 - Parse all journals and pages
 - Chunk content (~800 tokens per chunk)
 - Generate embeddings
@@ -89,7 +91,7 @@ bun query "What happened in our last session?"
 ```bash
 --show-context    # Show retrieved chunks before answer
 --no-stream       # Wait for full response (no streaming)
---top-k N         # Retrieve N chunks (default: 5)
+--top-k N         # Retrieve N chunks (default: 100)
 ```
 
 **Example with options:**
@@ -117,6 +119,7 @@ bun sync incremental
 ```
 
 **Recommended workflow:**
+
 - Run `bun sync full` once initially
 - Run `bun sync incremental` after each game session
 - Run `bun sync full` monthly or when restructuring notes
@@ -126,19 +129,23 @@ bun sync incremental
 ### Components
 
 1. **Logseq Parser** (`src/indexing/logseq-parser.ts`)
+
    - Parses journals (YYYY_MM_DD.md) and pages
    - Extracts metadata: dates, page links `[[Name]]`, block refs `((uuid))`
 
 2. **Chunker** (`src/indexing/chunker.ts`)
+
    - Preserves hierarchical bullet structure
    - Respects heading boundaries
    - ~800 token chunks with 200 token overlap
 
 3. **Indexer** (`src/indexing/indexer.ts`)
+
    - Generates embeddings (OpenAI text-embedding-3-small)
    - Stores in Qdrant with metadata
 
 4. **Retriever** (`src/querying/retriever.ts`)
+
    - Semantic search via cosine similarity
    - Returns top-K most relevant chunks
 
@@ -163,6 +170,7 @@ The system handles:
 - **Pages:** NPCs, locations, concepts (`pages/Caelum Fenovar.md`)
 
 **Supported Logseq syntax:**
+
 - Page links: `[[Page Name]]`
 - Block references: `((uuid))`
 - Hierarchical bullets with tabs
@@ -278,26 +286,26 @@ logseq-dnd-rag/
 ### Programmatic API
 
 ```typescript
-import { VectorRetriever } from './src/querying/retriever.js';
-import { ClaudeQueryHandler } from './src/querying/query-handler.js';
+import { VectorRetriever } from './src/querying/retriever.js'
+import { ClaudeQueryHandler } from './src/querying/query-handler.js'
 
-const retriever = new VectorRetriever();
-const handler = new ClaudeQueryHandler();
+const retriever = new VectorRetriever()
+const handler = new ClaudeQueryHandler()
 
-const results = await retriever.search("Who is Elara?", 5);
-const answer = await handler.query("Who is Elara?", results);
-console.log(answer);
+const results = await retriever.search('Who is Elara?', 5)
+const answer = await handler.query('Who is Elara?', results)
+console.log(answer)
 ```
 
 ### Date-filtered Queries
 
 ```typescript
 const results = await retriever.searchByDate(
-  "What happened?",
+  'What happened?',
   new Date('2024-01-01'),
   new Date('2024-12-31'),
   5
-);
+)
 ```
 
 ## Future Enhancements
